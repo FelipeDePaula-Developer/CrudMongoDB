@@ -4,13 +4,15 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Method;
+
 @Document("produto")
 @Component
 public class Produto {
 
     @Id
     private String id;
-    private Integer valor;
+    private Double valor;
     private String descricao;
     private String categoria;
     private Integer estoque;
@@ -19,7 +21,7 @@ public class Produto {
 
     }
 
-    public Produto(Integer valor, String descricao, String categoria, Integer estoque) {
+    public Produto(Double valor, String descricao, String categoria, Integer estoque) {
         this.valor = valor;
         this.descricao = descricao;
         this.categoria = categoria;
@@ -34,11 +36,11 @@ public class Produto {
         this.id = id;
     }
 
-    public Integer getValor() {
+    public Double getValor() {
         return valor;
     }
 
-    public void setValor(Integer valor) {
+    public void setValor(Double valor) {
         this.valor = valor;
     }
 
