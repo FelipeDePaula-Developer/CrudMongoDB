@@ -7,15 +7,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 public class ProdutoController {
@@ -24,14 +18,22 @@ public class ProdutoController {
     ProdutoService produtoService;
 
     @PostMapping("cad/produto")
-    public String cadProduto(@RequestParam Double valor, @RequestParam String descricao, @RequestParam String categoria, @RequestParam Integer estoque) {
-        return produtoService.cadastrarProduto(valor, descricao, categoria, estoque);
+    public String cadProduto(@RequestBody Produto produto) {
+        return produtoService.cadastrarProduto(produto);
     }
 
     @PostMapping("edit/produto")
-    public String editProduto(@RequestParam String id, @RequestBody String camposJson) throws JsonProcessingException {
-        Map<String, Object> mapProduto = new ObjectMapper().readValue(camposJson, Map.class);
-        mapProduto.put("id", id);
-        return produtoService.editarProduto(mapProduto);
+    public String editProduto(@RequestBody Produto produto) throws JsonProcessingException {
+        return produtoService.editarProduto(produto);
+    }
+
+    @GetMapping("count/produto")
+    public Long countProduto(){
+        return produtoService.countProduto();
+    }
+
+    @GetMapping("consult/produto")
+    public List<Produto> consultProduto(@RequestBody Produto produto){
+        return produtoService.consultarProduto(produto);
     }
 }
